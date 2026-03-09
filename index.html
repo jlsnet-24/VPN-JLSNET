@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>LAYANAN VPN JLSNET</title>
+
+<style>
+body{
+font-family:Arial;
+background:#0f172a;
+color:white;
+text-align:center;
+padding:40px;
+}
+
+.box{
+background:#1e293b;
+padding:30px;
+border-radius:12px;
+width:420px;
+margin:auto;
+}
+
+input{
+width:90%;
+padding:10px;
+margin:8px;
+border-radius:6px;
+border:none;
+}
+
+button{
+background:#22c55e;
+color:white;
+padding:10px 20px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+margin-top:10px;
+}
+
+textarea{
+width:90%;
+height:130px;
+margin-top:10px;
+border-radius:6px;
+}
+
+.note{
+margin-top:15px;
+font-size:13px;
+color:#facc15;
+}
+
+h1{
+color:#38bdf8;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>LAYANAN VPN JLSNET</h1>
+<p>Generator Script L2TP Client Mikrotik</p>
+
+<div class="box">
+
+<input id="ip" value="31.56.78.126" readonly>
+
+<input id="user" placeholder="Masukkan Username">
+
+<button onclick="generate()">Generate Script</button>
+
+<br>
+
+<textarea id="hasil" placeholder="Script akan muncul disini"></textarea>
+
+<br>
+
+<button onclick="kirimWA()">Aktifkan via WhatsApp</button>
+
+<div class="note">
+Note : Tempelkan Script Ini pada terminal Mikrotik anda Setelah Melakukan Aktivasi Akun
+</div>
+
+</div>
+
+<script>
+
+function generate(){
+
+let ip = document.getElementById("ip").value
+let user = document.getElementById("user").value
+let pass = "123"
+
+// tanggal otomatis
+let today = new Date()
+let tgl = today.getDate()
+let bln = today.getMonth()+1
+let thn = today.getFullYear()
+
+let tanggal = tgl+"-"+bln+"-"+thn
+
+let script = `/interface l2tp-client remove [find name=VPN];
+/interface l2tp-client add name=VPN_ connect-to=${ip} user=${user} password=${pass} disabled=no comment="VPN JLSNET Aktif ${tanggal}"`
+
+document.getElementById("hasil").value = script
+
+}
+
+function kirimWA(){
+
+let ip = document.getElementById("ip").value
+let user = document.getElementById("user").value
+let pass = "123"
+
+let today = new Date()
+let tgl = today.getDate()
+let bln = today.getMonth()+1
+let thn = today.getFullYear()
+
+let tanggal = tgl+"-"+bln+"-"+thn
+
+let pesan = `Halo Admin JLSNET
+Saya ingin aktivasi VPN
+
+Server : ${ip}
+Username : ${user}
+Password : ${pass}
+Tanggal Aktivasi : ${tanggal}`
+
+let nomor = "62895321780332"
+
+let url = `https://wa.me/${nomor}?text=${encodeURIComponent(pesan)}`
+
+window.open(url)
+
+}
+
+</script>
+
+</body>
+</html>
